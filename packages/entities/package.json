@@ -1,7 +1,7 @@
 {
-  "name": "@jso/http",
+  "name": "@jso/react-modules-entities",
   "version": "0.0.1",
-  "description": "Http service.",
+  "description": "React module to manage entities lifecycle.",
   "main": "src/index.js",
   "author": "Jimmy Somsanith <jimmy.somsanith@gmail.com>",
   "repository": {
@@ -13,14 +13,13 @@
     "test": "jest"
   },
   "dependencies": {
-    "prop-types": "^15.7.2",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
-    "react-redux": "^6.0.0",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "@jso/http": "^0.0.1",
+    "redux-entity": "^7.0.1"
   },
   "devDependencies": {
     "jest": "^24.1.0"
+  },
+  "peerDependencies": {
+    "@jso/react-modules": "^0.0.1"
   }
 }

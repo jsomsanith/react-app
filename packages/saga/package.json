@@ -3,11 +3,15 @@
   "version": "0.0.1",
   "description": "React module to manage redux saga.",
   "main": "src/index.js",
+  "author": "Jimmy Somsanith <jimmy.somsanith@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Talend/ui.git"
+  },
+  "license": "MIT",
   "scripts": {
     "test": "jest"
   },
-  "author": "Jimmy Somsanith <jimmy.somsanith@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "lodash.omit": "^4.5.0",
     "prop-types": "^15.7.2",
@@ -21,6 +25,6 @@
     "jest": "^24.1.0"
   },
   "peerDependencies": {
-    "@jso/react-app-modules": "^0.0.1"
+    "@jso/react-modules": "^0.0.1"
   }
 }

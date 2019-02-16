@@ -18,6 +18,8 @@
   "private": true,
   "version": "0.0.0",
   "workspaces": [
+    "packages/entities",
+    "packages/http",
     "packages/modules",
     "packages/saga"
   ]

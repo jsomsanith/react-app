@@ -3,11 +3,15 @@
   "version": "0.0.1",
   "description": "Modules system to compose react applications.",
   "main": "src/index.js",
+  "author": "Jimmy Somsanith <jimmy.somsanith@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Talend/ui.git"
+  },
+  "license": "MIT",
   "scripts": {
     "test": "jest"
   },
-  "author": "Jimmy Somsanith <jimmy.somsanith@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
