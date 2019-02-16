@@ -4,33 +4,22 @@
   "description": "React module to manage redux saga.",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest",
-    "lint": "eslint src"
+    "test": "jest"
   },
   "author": "Jimmy Somsanith <jimmy.somsanith@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "eslint": "5.3.0",
-    "eslint-config-airbnb": "17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.0",
-    "jest": "^24.1.0",
-    "prettier": "^1.16.4",
+  "dependencies": {
+    "lodash.omit": "^4.5.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "redux-saga": "^1.0.1"
+  },
+  "devDependencies": {
+    "jest": "^24.1.0"
   },
   "peerDependencies": {
-    "prop-types": "^15.7.2",
-    "react": "^16.8.2",
-    "react-redux": "^6.0.0",
-    "redux": "^4.0.1",
-    "redux-saga": "^1.0.1"
-  },
-  "dependencies": {
-    "lodash.omit": "^4.5.0"
+    "@jso/react-app-modules": "^0.0.1"
   }
 }
