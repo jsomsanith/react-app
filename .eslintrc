@@ -1,3 +1,13 @@
 {
-  "extends": "airbnb"
+  "extends": "airbnb",
+  "rules": {
+    "arrow-parens": [2, "as-needed"],
+    "indent": ["error", "tab", { "SwitchCase": 1, "ignoredNodes": ["ConditionalExpression *", "LogicalExpression *"] }],
+    "no-tabs": "off",
+    "react/forbid-prop-types": [0],
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "react/jsx-indent": ["error", "tab"],
+    "react/require-default-props": "off"
+  },
+  "globals": { "fetch": false }
 }

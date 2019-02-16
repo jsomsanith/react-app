@@ -2,7 +2,7 @@ import createSagaMiddleware from 'redux-saga';
 import withSaga from './withSaga';
 import rootSaga from './sagaStarter';
 
-// @talend/app module
+// @jso/react-modules module
 const sagaMiddleware = createSagaMiddleware();
 export const sagaModule = {
 	store: {

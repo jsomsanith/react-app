@@ -1,6 +1,6 @@
-# @jso/react-app-modules
+# @jso/react-modules
 
-`@jso/react-app-modules` is a lightweight lib that manages the bootstrap of your app. It contains 3 things
+`@jso/react-modules` is a lightweight lib that manages the bootstrap of your app. It contains 3 things
 * react
 * state management using redux
 * additional modules management
@@ -10,7 +10,7 @@
 
 1. [Installation](#installation): how to get the library.
 2. [Bootstrap](#bootstrap): how to bootstrap your app.
-3. [Modules](#modules): modules are the center of @jso/react-app-modules. Learn how to create your own modules to compose your apps.
+3. [Modules](#modules): modules are the center of @jso/react-modules. Learn how to create your own modules to compose your apps.
 4. [Services and custom modules](#services-and-custom-modules): learn how to write your services, composed with your custom modules, this represents a business part of your app.
 5. [Conventions](#conventions): some code conventions.
 6. [Recommanded optional libs](#recommanded-optional-libs): use those libs to manage router, immutability, ...
@@ -19,13 +19,13 @@
 ## Installation
 
 ```
-yarn install @jso/react-app-modules
+yarn install @jso/react-modules
 ```
 
 ## Bootstrap
 
 ```javascript
-import { bootstrap } from '@jso/react-app-modules';
+import { bootstrap } from '@jso/react-modules';
 import { datasetModule } from '@myenterprise/dataset';
 import App from './App.component';
 
@@ -101,7 +101,7 @@ You can find some interesting external modules :
 
 ## Services and custom modules
 
-A `@jso/react-app-modules` project follow the redux philosophy
+A `@jso/react-modules` project follow the redux philosophy
 * a store
 * components that are not aware of the store
 * react-redux connected components that `select` store parts, and `actions` functions
@@ -112,7 +112,7 @@ But it's important to keep the `store reducer`, `selector`, and `actions` in the
 * easy to maintain
 
 Each of these modules exposes
-* a `@jso/react-app-modules` module configuration. It's the right place to pass a reducer for example. This configuration must be passed to `bootstrap()` as module.
+* a `@jso/react-modules` module configuration. It's the right place to pass a reducer for example. This configuration must be passed to `bootstrap()` as module.
 * a service
 
 Services are the entities that hold the logic. They can have 2 natures

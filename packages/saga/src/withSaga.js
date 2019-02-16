@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import omit from 'lodash/omit';
+import omit from 'lodash.omit';
 import uuid from 'uuid';
 import { SAGA_START, SAGA_STOP } from './constants';
 

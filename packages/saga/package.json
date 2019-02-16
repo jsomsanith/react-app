@@ -1,5 +1,5 @@
 {
-  "name": "@jso/react-app-saga",
+  "name": "@jso/react-modules-saga",
   "version": "0.0.1",
   "description": "React module to manage redux saga.",
   "main": "src/index.js",
@@ -14,7 +14,8 @@
     "react": "^16.8.2",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
-    "redux-saga": "^1.0.1"
+    "redux-saga": "^1.0.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "jest": "^24.1.0"

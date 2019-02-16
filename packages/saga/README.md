@@ -1,4 +1,4 @@
-# @jso/react-app-saga
+# @jso/react-modules-saga
 
 This addon enables redux-saga.
 It replaces redux-saga management with sagaRouter and avoids route configuration duplication.
@@ -8,16 +8,16 @@ It replaces redux-saga management with sagaRouter and avoids route configuration
 ## Installation
 
 ```
-yarn install @jso/react-app-saga
+yarn install @jso/react-modules-saga
 ```
 
 ## Bootstrap
 
-Just pass the saga module to `@jso/react-app-modules` bootstrap.
+Just pass the saga module to `@jso/react-modules` bootstrap.
 
 ```javascript
-import { bootstrap } from '@jso/react-app-modules';
-import { sagaModule } from '@jso/react-app-saga';
+import { bootstrap } from '@jso/react-modules';
+import { sagaModule } from '@jso/react-modules-saga';
 import App from './App.component';
 
 bootstrap({
@@ -55,7 +55,7 @@ withSaga(saga)(Component)
 ```javascript
 import React from 'react';
 import ProptTypes from 'prop-types';
-import { withSaga } from '@jso/react-app-saga';
+import { withSaga } from '@jso/react-modules-saga';
 
 import saga from './saga'; // preparations main saga
 
