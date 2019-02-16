@@ -1,6 +1,6 @@
-# @talend/app
+# @jso/react-app-modules
 
-`@talend/app` is a lightweight module that manage the bootstrap of your app. It contains 3 things
+`@jso/react-app-modules` is a lightweight lib that manages the bootstrap of your app. It contains 3 things
 * react
 * state management using redux
 * additional modules management
@@ -10,7 +10,7 @@
 
 1. [Installation](#installation): how to get the library.
 2. [Bootstrap](#bootstrap): how to bootstrap your app.
-3. [Modules](#modules): modules are the center of @talend/app. Learn how to create your own modules to compose your apps.
+3. [Modules](#modules): modules are the center of @jso/react-app-modules. Learn how to create your own modules to compose your apps.
 4. [Services and custom modules](#services-and-custom-modules): learn how to write your services, composed with your custom modules, this represents a business part of your app.
 5. [Conventions](#conventions): some code conventions.
 6. [Recommanded optional libs](#recommanded-optional-libs): use those libs to manage router, immutability, ...
@@ -19,14 +19,14 @@
 ## Installation
 
 ```
-yarn install @talend/app
+yarn install @jso/react-app-modules
 ```
 
 ## Bootstrap
 
 ```javascript
-import { bootstrap } from '@talend/app';
-import { datasetModule } from '@talend/dataset';
+import { bootstrap } from '@jso/react-app-modules';
+import { datasetModule } from '@myenterprise/dataset';
 import App from './App.component';
 
 bootstrap({
@@ -94,14 +94,14 @@ In this example, myAddonModule is merged with the configuration passed to `boots
 
 Modules can be internal modules that are parts of your applications (see next section about custom modules), or external modules.
 You can find some interesting external modules :
-* [Entities](../talend-app-entities/README.md) : helps to manage entities with the fetch status and errors.
-* [Saga](../talend-app-saga/README.md) : add redux-saga with a HOC to start/stop the saga depending on components mount/unmount.
-* [Http](../talend-app-http/README.md) : helps to manage http request, with the possibility to configure 1 global configuration, or 1 configuration per request.
-* [Store utils](../talend-app-store-utils/README.md) : a way to avoid writing reducers for very simple cases.
+* [Entities](../entities/README.md) : helps to manage entities with the fetch status and errors.
+* [Saga](../saga/README.md) : add redux-saga with a HOC to start/stop the saga depending on components mount/unmount.
+* [Http](../http/README.md) : helps to manage http request, with the possibility to configure 1 global configuration, or 1 configuration per request.
+* [Store utils](../store-utils/README.md) : a way to avoid writing reducers for very simple cases.
 
 ## Services and custom modules
 
-A `@talend/app` project follow the redux philosophy
+A `@jso/react-app-modules` project follow the redux philosophy
 * a store
 * components that are not aware of the store
 * react-redux connected components that `select` store parts, and `actions` functions
@@ -112,7 +112,7 @@ But it's important to keep the `store reducer`, `selector`, and `actions` in the
 * easy to maintain
 
 Each of these modules exposes
-* a `@talend/app` module configuration. It's the right place to pass a reducer for example. This configuration must be passed to `bootstrap()` as module.
+* a `@jso/react-app-modules` module configuration. It's the right place to pass a reducer for example. This configuration must be passed to `bootstrap()` as module.
 * a service
 
 Services are the entities that hold the logic. They can have 2 natures
