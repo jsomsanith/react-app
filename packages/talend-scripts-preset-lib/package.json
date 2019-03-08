@@ -1,0 +1,41 @@
+{
+  "name": "talend-scripts-preset-lib",
+  "description": "@talend/scripts preset to build libs",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "index.js",
+  "author": "Talend Frontend <frontend@talend.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsomsanith/react-app.git"
+  },
+  "scripts": {
+    "test": "echo nothing to test"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.2.0",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/plugin-transform-object-assign": "^7.2.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.0.0",
+    "core-js": "^2.6.5",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0",
+    "eslint-plugin-react-hooks": "^1.4.0",
+    "jest-environment-jsdom": "^23.4.0",
+    "jest-environment-jsdom-global": "^1.1.1",
+    "raf": "^3.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

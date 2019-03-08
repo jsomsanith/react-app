@@ -6,11 +6,12 @@
   "author": "Jimmy Somsanith <jimmy.somsanith@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Talend/ui.git"
+    "url": "https://github.com/jsomsanith/react-app.git"
   },
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "prepublish": "talend-scripts build:lib",
+    "test": "talend-scripts test"
   },
   "dependencies": {
     "lodash.omit": "^4.5.0",
@@ -22,9 +23,9 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "jest": "^24.1.0"
   },
   "peerDependencies": {
-    "@jso/react-modules": "^0.0.1"
+    "@talend/scripts": "^0.14.4-0",
+    "talend-scripts-preset-lib": "^0.1.0"
   }
 }

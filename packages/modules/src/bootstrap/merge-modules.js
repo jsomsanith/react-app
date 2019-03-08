@@ -63,6 +63,7 @@ function mergeArrays(firstArray, secondArray) {
 }
 
 const MERGE_FNS = {
+	name: () => undefined,
 	modules: () => undefined,
 	appId: getUnique,
 	appLoader: getUnique,

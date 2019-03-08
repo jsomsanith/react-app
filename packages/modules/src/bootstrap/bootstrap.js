@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import mergeModules from './modules';
+import mergeModules from './merge-modules';
 import App from '../App';
 
 function bootstrapRedux(options) {

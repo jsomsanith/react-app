@@ -6,12 +6,10 @@
     "url": "https://github.com/Talend/ui.git"
   },
   "license": "MIT",
+  "scripts": {
+    "test": "lerna exec -- yarn test --passWithNoTests"
+  },
   "devDependencies": {
-    "eslint": "5.3.0",
-    "eslint-config-airbnb": "17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.0",
     "lerna": "^3.13.0",
     "prettier": "^1.16.4"
   },
@@ -21,6 +19,7 @@
     "packages/entities",
     "packages/http",
     "packages/modules",
-    "packages/saga"
+    "packages/saga",
+    "packages/talend-scripts-preset-lib"
   ]
 }
