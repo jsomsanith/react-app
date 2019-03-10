@@ -95,13 +95,29 @@ function mergeAll(configs) {
 }
 
 function extractModules(configuration) {
-	const modules = [configuration];
+	// flatten modules
+	let modules = [configuration];
 	if (configuration.modules) {
 		const subModules = configuration.modules
 			.map(extractModules)
 			.reduce((accu, mods) => accu.concat(mods), []);
-		return modules.concat(subModules);
+		modules = modules.concat(subModules);
 	}
+
+	// remove duplicate modules
+	const ids = [];
+	modules.filter(mod => {
+		if (!mod.id) {
+			return true;
+		}
+		if (ids.includes(mod.id)) {
+			return false;
+		}
+
+		ids.push(mod.id);
+		return true;
+	});
+
 	return modules;
 }
 
