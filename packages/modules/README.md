@@ -1,9 +1,9 @@
 # @jso/react-modules
 
-`@jso/react-modules` is a lightweight lib that manages the bootstrap of your app. It contains 3 things
-* react
-* state management using redux
-* additional modules management
+`@jso/react-modules` is a lightweight lib that manages the bootstrap of your app. It works with
+* react as a component library
+* redux as a state management library
+* a module management system to organise your code
 
 
 ## Table of content
@@ -45,7 +45,7 @@ bootstrap({
 
 | Property | Description |
 |---|---|
-| appId | The id of the html element where to bootstrap. |
+| appId | The id of the html element where to bootstrap the app. |
 | store | The redux store configuration. See [redux documentation](https://redux.js.org/introduction/getting-started) for each sub property details. |
 | store.storeCallback | Function that is executed after the store creation. The store is passed as first argument. |
 | rootComponent | Your main app component. |
@@ -53,7 +53,7 @@ bootstrap({
 
 ## Modules
 
-Modules are part of configurations.
+Modules are parts of configuration.
 
 When you bootstrap your app, you pass your main app configuration. Modules are merged with this main configuration, that is handled by `bootstrap()`.
 
@@ -106,7 +106,7 @@ A `@jso/react-modules` project follow the redux philosophy
 * components that are not aware of the store
 * react-redux connected components that `select` store parts, and `actions` functions
 
-But it's important to keep the `store reducer`, `selector`, and `actions` in the same business entity in a same `module`, to make it
+But it's important to keep the store `reducer`, `selector`, and `actions` in the same business entity, in a same `module`, to make it
 * easy to reason about
 * easy to read and navigate within you folder architecture
 * easy to maintain

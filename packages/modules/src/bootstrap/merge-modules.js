@@ -1,3 +1,13 @@
+function getUnique(item1, item2, name) {
+	if (item1 && item2) {
+		throw new Error(
+			`@jso/react-modules doesn't accept multiple "${name}" attributes.` +
+				`Please ensure your app doesn't use multiple modules that define "${name}" in their configuration`,
+		);
+	}
+	return item1 || item2;
+}
+
 function mergeObjects(obj1, obj2) {
 	if (!obj2) {
 		return obj1;
@@ -34,22 +44,6 @@ function mergeFns(fn1, fn2) {
 		fn1(...args);
 		fn2(...args);
 	};
-}
-
-function throwIfBothExists(obj1, obj2, name) {
-	if (obj1 && obj2) {
-		throw new Error(
-			`Can't merge both config that both have ${name} attribute. Only one is accepted.`,
-		);
-	}
-}
-
-function getUnique(obj1, obj2, name) {
-	throwIfBothExists(obj1, obj2, name);
-	if (obj1) {
-		return obj1;
-	}
-	return obj2;
 }
 
 function mergeArrays(firstArray, secondArray) {
@@ -105,20 +99,18 @@ function extractModules(configuration) {
 	}
 
 	// remove duplicate modules
-	const ids = [];
-	modules.filter(mod => {
-		if (!mod.id) {
+	const names = [];
+	return modules.filter(({ name }) => {
+		if (!name) {
 			return true;
 		}
-		if (ids.includes(mod.id)) {
+		if (names.includes(name)) {
 			return false;
 		}
 
-		ids.push(mod.id);
+		names.push(name);
 		return true;
 	});
-
-	return modules;
 }
 
 export default function mergeModules(configuration) {
