@@ -2,7 +2,7 @@
   "name": "@jso/react-modules-entities",
   "version": "0.0.1",
   "description": "React module to manage entities lifecycle.",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "author": "Jimmy Somsanith <jimmy.somsanith@gmail.com>",
   "repository": {
     "type": "git",
@@ -15,10 +15,10 @@
   },
   "dependencies": {
     "@jso/http": "^0.0.1",
-    "redux-entity": "^7.0.1"
+    "redux-entity": "^7.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "@jso/react-modules": "^0.0.1",
     "@talend/scripts": "^0.14.4-0",
     "talend-scripts-preset-lib": "^0.1.0"
   },

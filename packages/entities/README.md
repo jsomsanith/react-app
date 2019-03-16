@@ -78,19 +78,20 @@ export default connect(mapStateToProps)(DatasetsList);
 
 ## Service actions
 
-### Fetch
+### Fetch entity
 
 Perform a fetch request and put it in redux store, managing the request status.
 
 **Method**
 ```javascript
-EntityService.actions.fetchEntity(entityId, url);
+EntityService.actions.fetchEntity(entityId, url, transform);
 ```
 
 | Argument | Type | Description |
 |---|---|---|
 | entityId | `string` | The id, to which the entity will be attached in the store. |
 | url | `string` | The url to GET the entity. It uses `@jso/react-modules-http` to perform the fetch. To configure it, please refers to the [http addon documentation](../http/README.md). |
+| transform | `fn` | `Optional`. A function to apply to fetch response before storing it. |
 
 **Example**
 ```javascript
@@ -100,7 +101,7 @@ import EntitiesService from '@jso/react-modules-entities';
 
 class DatasetsList extends React.Component {
     componentDidMount() {
-        this.props.fetchDataset('datasets', '/datasets.json');
+        this.props.fetchEntity('datasets', '/datasets.json', (resp) => resp.data);
     }
 
     render() {
@@ -109,7 +110,7 @@ class DatasetsList extends React.Component {
 }
 
 const mapDispatchToProps = {
-    fetchDataset: EntitiesService.actions.fetchEntity,
+    fetchEntity: EntitiesService.actions.fetchEntity,
 };
 
 export default connect(
@@ -119,13 +120,54 @@ export default connect(
 
 ```
 
-### AddToCollection
+### Set entity
 
-Insert an element in a collection.
+Set an entity in redux store.
 
 **Method**
 ```javascript
-EntityService.actions.addToCollection(entityId, element, index);
+EntityService.actions.setEntity(entityId, entity);
+```
+
+| Argument | Type | Description |
+|---|---|---|
+| entityId | `string` | The id, to which the entity will be attached in the store. |
+| entity | `any` | The entity to create in store. |
+
+**Example**
+```javascript
+import React from 'react';
+import { connect } from 'react-redux';
+import EntitiesService from '@jso/react-modules-entities';
+
+class DatasetsList extends React.Component {
+    componentDidMount() {
+        this.props.setEntity('datasets', []);
+    }
+
+    render() {
+        // render your component
+    }
+}
+
+const mapDispatchToProps = {
+    setEntity: EntitiesService.actions.setEntity,
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(DatasetsList);
+
+```
+
+### InsertIntoCollection
+
+Insert an element into a collection.
+
+**Method**
+```javascript
+EntityService.actions.insertIntoCollection(entityId, element, index);
 ```
 
 | Argument | Type | Description |
@@ -147,7 +189,7 @@ function addTask(title, description) {
         title,
         description,
     };
-    return EntitiesService.actions.addToCollection('tasks', element, 0); // add as collection head
+    return EntitiesService.actions.insertIntoCollection('tasks', element, 0); // insert as collection head
 }
 
 export default {
@@ -219,7 +261,7 @@ Replace an element in a collection, at the provided index.
 
 **Method**
 ```javascript
-EntityService.actions.replaceInCollectionById(entityId, index, element);
+EntityService.actions.replaceInCollectionByIndex(entityId, index, element);
 ```
 
 | Argument | Type | Description |
@@ -235,7 +277,7 @@ EntityService.actions.replaceInCollectionById(entityId, index, element);
 import EntitiesService from '@jso/react-modules-entities';
 
 function updateTask(index, element) {
-    return EntitiesService.actions.replaceInCollectionById('tasks', index, element);
+    return EntitiesService.actions.replaceInCollectionByIndex('tasks', index, element);
 }
 
 export default {

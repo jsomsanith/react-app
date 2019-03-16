@@ -1,13 +1,21 @@
+import thunk from 'redux-thunk';
 import { entities } from 'redux-entity';
-import { ENTITIES_STORE_ROOT, fetchEntity, getEntity } from './entities';
+import {
+	ENTITIES_STORE_ROOT,
+	getEntity,
+	fetchEntity,
+	insertIntoCollection,
+	removeFromCollection,
+	removeFromCollectionByIndex,
+	replaceInCollection,
+	replaceInCollectionByIndex,
+	setEntity,
+} from './entities';
 
 // @jso/react-modules module
-/* TODO this module depends on thunk
- it should add it in dependencies and module definition
- @jso/react-modules bootstrap should remove duplicates during module merge
- */
 export const entitiesModule = {
 	store: {
+		middlewares: [thunk],
 		reducer: {
 			[ENTITIES_STORE_ROOT]: entities,
 		},
@@ -16,6 +24,14 @@ export const entitiesModule = {
 
 // Service
 export default {
-	actions: { fetchEntity },
+	actions: {
+		fetchEntity,
+		insertIntoCollection,
+		removeFromCollection,
+		removeFromCollectionByIndex,
+		replaceInCollection,
+		replaceInCollectionByIndex,
+		setEntity,
+	},
 	selectors: { getEntity },
 };
