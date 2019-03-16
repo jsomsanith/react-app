@@ -2,7 +2,7 @@
   "name": "@jso/react-modules",
   "version": "0.0.1",
   "description": "Modules system to compose react applications.",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "author": "Jimmy Somsanith <jimmy.somsanith@gmail.com>",
   "repository": {
     "type": "git",
@@ -18,8 +18,7 @@
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-redux": "^6.0.0",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "@talend/scripts": "^0.14.4-0",

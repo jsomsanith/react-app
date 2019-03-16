@@ -48,7 +48,8 @@ function mergeFns(fn1, fn2) {
 
 function mergeArrays(firstArray, secondArray) {
 	if (firstArray && secondArray) {
-		return [].concat(firstArray).concat(secondArray);
+		const merged = [].concat(firstArray).concat(secondArray);
+		return [...new Set(merged)];
 	}
 	if (secondArray) {
 		return secondArray;
@@ -84,10 +85,22 @@ function merge(acc = {}, config) {
 	}, acc);
 }
 
+/**
+ * Merge an array of modules configuration to a single module
+ *
+ * @param 	{array} configs		The array of modules configuration
+ * @returns {object}			The merged module configuration
+ */
 function mergeAll(configs) {
 	return configs.reduce(merge, {});
 }
 
+/**
+ * Extract nested modules and flatten them into ann array of modules
+ *
+ * @param 	{object} configuration		The main module configuration
+ * @returns {array}						The flatten modules
+ */
 function extractModules(configuration) {
 	// flatten modules
 	let modules = [configuration];
@@ -113,6 +126,12 @@ function extractModules(configuration) {
 	});
 }
 
+/**
+ * Flatten and merge modules configuration
+ *
+ * @param 	{object} configuration		The main module configuration
+ * @returns {object}					The merged configuration
+ */
 export default function mergeModules(configuration) {
 	const configs = extractModules(configuration);
 	return mergeAll(configs);

@@ -1,11 +1,16 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
-import thunk from 'redux-thunk';
 
 import mergeModules from './merge-modules';
 import App from '../App';
 
+/**
+ * Create redux store based on the provided options
+ *
+ * @param 	{object} options		The redux configurationn
+ * @returns	{object}				The redux store
+ */
 function bootstrapRedux(options) {
 	const {
 		enhancers = [],
@@ -18,7 +23,7 @@ function bootstrapRedux(options) {
 		combineReducers(reducer),
 		initialState,
 		compose(
-			applyMiddleware(thunk, ...middlewares),
+			applyMiddleware(...middlewares),
 			...enhancers,
 		),
 	);
@@ -28,6 +33,11 @@ function bootstrapRedux(options) {
 	return store;
 }
 
+/**
+ * Bootstrap a React/redux App, based on a provided configuration
+ *
+ * @param {object} configuration		The app configuration
+ */
 export default function bootstrap(configuration) {
 	const options = mergeModules(configuration);
 	const store = bootstrapRedux(options);

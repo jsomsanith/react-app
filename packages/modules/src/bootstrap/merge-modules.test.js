@@ -195,11 +195,10 @@ describe('Modules merge', () => {
 		expect(configuration.store.middlewares).toEqual([mdlw1, mdlw2, mdlw3]);
 	});
 
-	it('should remove duplicates', () => {
+	it('should remove duplicate modules', () => {
 		// given
 		const reducer1 = jest.fn();
 		const reducer2 = jest.fn();
-		const reducer3 = jest.fn();
 		const mdlw1 = jest.fn();
 		const mdlw2 = jest.fn();
 		const mdlw3 = jest.fn();
@@ -224,6 +223,29 @@ describe('Modules merge', () => {
 			part1: reducer1,
 			part2: reducer2,
 		});
+		expect(configuration.store.middlewares).toEqual([mdlw1, mdlw2, mdlw3]);
+	});
+
+	it('should remove duplicate elements in arrays', () => {
+		// given
+		const mdlw1 = jest.fn();
+		const mdlw2 = jest.fn();
+		const mdlw3 = jest.fn();
+		const modules = [
+			{
+				name: 'first',
+				store: { middlewares: [mdlw1, mdlw2] },
+			},
+			{
+				name: 'second',
+				store: { middlewares: [mdlw2, mdlw3] },
+			},
+		];
+
+		// when
+		const configuration = mergeModules({ modules });
+
+		// then
 		expect(configuration.store.middlewares).toEqual([mdlw1, mdlw2, mdlw3]);
 	});
 });
