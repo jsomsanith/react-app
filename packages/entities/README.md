@@ -1,7 +1,7 @@
 # @jso/react-modules-entities
 
-This addon simplifies the entities management.
-* manage fetch status and errors
+This addon offers entities management.
+* fetch status and errors
 * store entities in redux store
 
 Entities can have any data type: Object, Array, ...
@@ -14,7 +14,7 @@ yarn install @jso/react-modules-entities
 
 ## Bootstrap
 
-Just pass the entities module to `@jso/react-modules`.
+Just pass the entities module to `@jso/react-modules` bootstrap.
 
 ```javascript
 import { bootstrap } from '@jso/react-modules';
@@ -22,15 +22,8 @@ import { entitiesModule } from '@jso/react-modules-entities';
 import App from './App.component';
 
 bootstrap({
-    appId: 'app',
-    store: {
-        enhancers: [],
-        initialState: {},
-        middlewares: [],
-        reducer: {},
-        storeCallback: () => {},
-    },
-    rootComponent: App,
+    // your app configuration
+
     modules: [entitiesModule]
 });
 ```
@@ -62,7 +55,7 @@ This method returns an entity with the following shape
 |---|---|---|
 | data | `any` | The entity value. |
 | isFetching | `boolean` | The id, to which the entity is attached in the store. |
-| error | `object` | Error returned by the fetch. |
+| error | `object` | Error returned by fetch request. |
 
 **Example**
 ```javascript
@@ -73,7 +66,7 @@ import EntitiesService from '@jso/react-modules-entities';
 function DatasetsList(props) {
     const { isFetching, data, error } = this.props.datasets;
 
-    ...
+    // render your component
 }
 
 function mapStateToProps(state) {
@@ -111,7 +104,7 @@ class DatasetsList extends React.Component {
     }
 
     render() {
-        ...
+        // render your component
     }
 }
 
@@ -220,9 +213,9 @@ export default {
 }
 ```
 
-### ReplaceInCollectionById
+### ReplaceInCollectionByIndex
 
-Replace an element in a collection, at the provided id.
+Replace an element in a collection, at the provided index.
 
 **Method**
 ```javascript
