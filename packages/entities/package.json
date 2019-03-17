@@ -1,5 +1,5 @@
 {
-  "name": "@jso/react-modules-entities",
+  "name": "@jso/entities",
   "version": "0.0.1",
   "description": "React module to manage entities lifecycle.",
   "main": "lib/index.js",
@@ -14,7 +14,6 @@
     "test": "talend-scripts test"
   },
   "dependencies": {
-    "@jso/http": "^0.0.1",
     "redux-entity": "^7.0.1",
     "redux-thunk": "^2.3.0"
   },

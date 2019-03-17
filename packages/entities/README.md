@@ -1,4 +1,4 @@
-# @jso/react-modules-entities
+# @jso/entities
 
 This addon offers entities management.
 * fetch status and errors
@@ -9,7 +9,7 @@ Entities can have any data type: Object, Array, ...
 ## Installation
 
 ```
-yarn install @jso/react-modules-entities
+yarn install @jso/entities
 ```
 
 ## Bootstrap
@@ -18,7 +18,7 @@ Just pass the entities module to `@jso/react-modules` bootstrap.
 
 ```javascript
 import { bootstrap } from '@jso/react-modules';
-import { entitiesModule } from '@jso/react-modules-entities';
+import { entitiesModule } from '@jso/entities';
 import App from './App.component';
 
 bootstrap({
@@ -61,7 +61,7 @@ This method returns an entity with the following shape
 ```javascript
 import React from 'react';
 import { connect } from 'react-redux';
-import EntitiesService from '@jso/react-modules-entities';
+import EntitiesService from '@jso/entities';
 
 function DatasetsList(props) {
     const { isFetching, data, error } = this.props.datasets;
@@ -78,48 +78,6 @@ export default connect(mapStateToProps)(DatasetsList);
 
 ## Service actions
 
-### Fetch entity
-
-Perform a fetch request and put it in redux store, managing the request status.
-
-**Method**
-```javascript
-EntityService.actions.fetchEntity(entityId, url, transform);
-```
-
-| Argument | Type | Description |
-|---|---|---|
-| entityId | `string` | The id, to which the entity will be attached in the store. |
-| url | `string` | The url to GET the entity. It uses `@jso/react-modules-http` to perform the fetch. To configure it, please refers to the [http addon documentation](../http/README.md). |
-| transform | `fn` | `Optional`. A function to apply to fetch response before storing it. |
-
-**Example**
-```javascript
-import React from 'react';
-import { connect } from 'react-redux';
-import EntitiesService from '@jso/react-modules-entities';
-
-class DatasetsList extends React.Component {
-    componentDidMount() {
-        this.props.fetchEntity('datasets', '/datasets.json', (resp) => resp.data);
-    }
-
-    render() {
-        // render your component
-    }
-}
-
-const mapDispatchToProps = {
-    fetchEntity: EntitiesService.actions.fetchEntity,
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(DatasetsList);
-
-```
-
 ### Set entity
 
 Set an entity in redux store.
@@ -132,17 +90,17 @@ EntityService.actions.setEntity(entityId, entity);
 | Argument | Type | Description |
 |---|---|---|
 | entityId | `string` | The id, to which the entity will be attached in the store. |
-| entity | `any` | The entity to create in store. |
+| entity | `Promise` or `any` | The entity to create in store or a promise that resolves it. |
 
 **Example**
 ```javascript
 import React from 'react';
 import { connect } from 'react-redux';
-import EntitiesService from '@jso/react-modules-entities';
+import EntitiesService from '@jso/entities';
 
 class DatasetsList extends React.Component {
     componentDidMount() {
-        this.props.setEntity('datasets', []);
+        this.props.setEntity('datasets', HttpService.get('/api/datasets'));
     }
 
     render() {
@@ -161,27 +119,62 @@ export default connect(
 
 ```
 
-### InsertIntoCollection
+### AddToCollection
 
-Insert an element into a collection.
+Add an element to a collection.
 
 **Method**
 ```javascript
-EntityService.actions.insertIntoCollection(entityId, element, index);
+EntityService.actions.addToCollection(entityId, element);
 ```
 
 | Argument | Type | Description |
 |---|---|---|
 | entityId | `string` | The id, to which the entity is attached in the store. |
-| element | `any` | The element to add in the collection. |
-| index | `integer` | The index where to add the element. If `undefined`, it will be added at the end of the collection. |
+| element | `Promise` or `any` | The element to add in the collection or a promise that resolves it. |
 
 **Example**
 ```javascript
 // tasks.service.js
 
 import uuid from 'uuid';
-import EntitiesService from '@jso/react-modules-entities';
+import EntitiesService from '@jso/entities';
+
+function addTask(title, description) {
+    const element = {
+        id: uuid.v4(),
+        title,
+        description,
+    };
+    return EntitiesService.actions.addToCollection('tasks', element);
+}
+
+export default {
+    addTask,
+}
+```
+
+### InsertIntoCollection
+
+Insert an element into a collection.
+
+**Method**
+```javascript
+EntityService.actions.insertIntoCollection(entityId, index,element);
+```
+
+| Argument | Type | Description |
+|---|---|---|
+| entityId | `string` | The id, to which the entity is attached in the store. |
+| index | `integer` | The index where to add the element. |
+| element | `Promise` or `any` | The element to add in the collection or a promise that resolves it. |
+
+**Example**
+```javascript
+// tasks.service.js
+
+import uuid from 'uuid';
+import EntitiesService from '@jso/entities';
 
 function addTask(title, description) {
     const element = {
@@ -203,22 +196,24 @@ Remove an element from a collection, identified by the index.
 
 **Method**
 ```javascript
-EntityService.actions.removeFromCollectionByIndex(entityId, index);
+EntityService.actions.removeFromCollectionByIndex(entityId, index, promise);
 ```
 
 | Argument | Type | Description |
 |---|---|---|
 | entityId | `string` | The id, to which the entity is attached in the store. |
 | index | `integer` | The index in the array to remove. |
+| promise | `Promise` | `Optional`. A promise to wait before removing the element. |
 
 **Example**
 ```javascript
 // tasks.service.js
 
-import EntitiesService from '@jso/react-modules-entities';
+import EntitiesService from '@jso/entities';
+import HttpService from '@jso/http';
 
 function removeTask(index) {
-    return EntitiesService.actions.removeFromCollectionByIndex('tasks', index);
+    return EntitiesService.actions.removeFromCollectionByIndex('tasks', index, HttpService.delete(index));
 }
 
 export default {
@@ -232,22 +227,24 @@ Remove an element from a collection.
 
 **Method**
 ```javascript
-EntityService.actions.removeFromCollection(entityId, element);
+EntityService.actions.removeFromCollection(entityId, element, promise);
 ```
 
 | Argument | Type | Description |
 |---|---|---|
 | entityId | `string` | The id, to which the entity is attached in the store. |
 | element | `any` | The element in the array to remove. |
+| promise | `Promise` | `Optional`. A promise to wait before removing the element. |
 
 **Example**
 ```javascript
 // tasks.service.js
 
-import EntitiesService from '@jso/react-modules-entities';
+import EntitiesService from '@jso/entities';
+import HttpService from '@jso/http';
 
 function removeTask(element) {
-    return EntitiesService.actions.removeFromCollection('tasks', element);
+    return EntitiesService.actions.removeFromCollection('tasks', element, HttpService.delete(element));
 }
 
 export default {
@@ -268,16 +265,16 @@ EntityService.actions.replaceInCollectionByIndex(entityId, index, element);
 |---|---|---|
 | entityId | `string` | The id, to which the entity is attached in the store. |
 | index | `integer` | The index in the array to replace. |
-| element | `any` | The new element. |
+| element | `Promise` or `any` | The new element or a promise that resolves it. |
 
 **Example**
 ```javascript
 // tasks.service.js
 
-import EntitiesService from '@jso/react-modules-entities';
+import EntitiesService from '@jso/entities';
 
-function updateTask(index, element) {
-    return EntitiesService.actions.replaceInCollectionByIndex('tasks', index, element);
+function updateTask(index, newElement) {
+    return EntitiesService.actions.replaceInCollectionByIndex('tasks', index, newElement);
 }
 
 export default {
@@ -298,13 +295,13 @@ EntityService.actions.replaceInCollection(entityId, oldElement, newElement);
 |---|---|---|
 | entityId | `string` | The id, to which the entity is attached in the store. |
 | oldElement | `any` | The element to replace. |
-| newElement | `any` | The new element. |
+| newElement | `Promise` or `any` | The new element or a promise that resolves it. |
 
 **Example**
 ```javascript
 // tasks.service.js
 
-import EntitiesService from '@jso/react-modules-entities';
+import EntitiesService from '@jso/entities';
 
 function updateTask(oldElement, newElement) {
     return EntitiesService.actions.replaceICollection('tasks', oldElement, newElement);

@@ -1,8 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { loadEntity } from 'redux-entity';
-import HttpService from '@jso/http';
 
-export const ENTITIES_STORE_ROOT = '@jso/react-module-entities';
+export const ENTITIES_STORE_ROOT = '@jso/entities';
 
 /**
  * Selector: get the entity from redux store
@@ -16,70 +15,58 @@ export function getEntity(state, entityId) {
 }
 
 /**
- * Action: fetch an entity, and add it in redux store
- *
- * @param 	{string} entityId		The entity id
- * @param 	{string} url			The url where to GET the entity
- * @param 	{Function} transform	A function to apply to fetch response before storing it
- * @returns {Function}				A thunk to dispatch
- */
-export function fetchEntity(entityId, url, transform) {
-	return loadEntity(
-		entityId,
-		HttpService.get(url).then(entity => {
-			if (transform) {
-				return transform(entity);
-			}
-			return entity;
-		}),
-	);
-}
-
-/**
  * Action: set entity in store
  *
  * @param 	{string} entityId		The entity id
- * @param 	{any} entity			The entity to set in store
+ * @param 	{any} entity			The entity (or a Promise resolving it) to set in store
  * @returns {Function}				A thunk to dispatch
  */
 export function setEntity(entityId, entity) {
 	return loadEntity(entityId, Promise.resolve(entity));
 }
 
-function generateCollectionThunk(entityId, modifier) {
+function generateCollectionThunk(entityId, promise, modifier) {
 	return (dispatch, getState) => {
-		const actionPromise = new Promise((resolve, reject) => {
+		const actionPromise = promise.then(promiseResult => {
 			const entity = getEntity(getState(), entityId);
 			if (!Array.isArray(entity)) {
-				reject(
+				throw new Error(
 					`@jso/react-modules-entities#insertIntoCollection to "${entityId}" failed: The entity is not an array.`,
 				);
 			}
 
 			const modifiedEntity = entity.slice(0);
-			modifier(modifiedEntity);
-			resolve(modifiedEntity);
+			modifier(modifiedEntity, promiseResult);
+			return modifiedEntity;
 		});
 		dispatch(loadEntity(entityId, actionPromise));
 	};
 }
 
 /**
- * Action: insert an element into the collection
+ * Action: add an element to the collection
  *
  * @param 	{string} entityId		The collection entity id
- * @param 	{any} element			The element to insert
- * @param 	{number} index			If provided, it indicates where to insert the element.
- * 									Otherwise it's inserted at the end
+ * @param 	{any} element			The element to insert (or a Promise resolving it)
  * @returns {Function}				The thunk to dispatch
  */
-export function insertIntoCollection(entityId, element, index) {
-	return generateCollectionThunk(entityId, entity => {
-		if (index === undefined) {
-			entity.push(element);
-		} else {
-			entity.splice(index, 0, element);
-		}
+export function addToCollection(entityId, element) {
+	return generateCollectionThunk(entityId, Promise.resolve(element), (entity, resolvedElement) => {
+		entity.push(resolvedElement);
+	});
+}
+
+/**
+ * Action: insert an element into the collection at a defined position
+ *
+ * @param 	{string} entityId		The collection entity id
+ * @param 	{number} index			The index where to insert the element.
+ * @param 	{any} element			The element to insert (or a Promise resolving it)
+ * @returns {Function}				The thunk to dispatch
+ */
+export function insertIntoCollection(entityId, index, element) {
+	return generateCollectionThunk(entityId, Promise.resolve(element), (entity, resolvedElement) => {
+		entity.splice(index, 0, resolvedElement);
 	});
 }
 
@@ -88,10 +75,12 @@ export function insertIntoCollection(entityId, element, index) {
  *
  * @param 	{string} entityId		The collection entity id
  * @param 	{number} index			The index of the element to remove
+ * @param 	{Promise} promise		A promise to wait before performing the removal in store.
+ * 									It can be a DELETE request for example.
  * @returns {Function}				The thunk to dispatch
  */
-export function removeFromCollectionByIndex(entityId, index) {
-	return generateCollectionThunk(entityId, entity => {
+export function removeFromCollectionByIndex(entityId, index, promise) {
+	return generateCollectionThunk(entityId, promise, entity => {
 		entity.splice(index, 1);
 	});
 }
@@ -101,10 +90,12 @@ export function removeFromCollectionByIndex(entityId, index) {
  *
  * @param 	{string} entityId		The collection entity id
  * @param 	{any} element			The element to remove
+ * @param 	{Promise} promise		A promise to wait before performing the removal in store.
+ * 									It can be a DELETE request for example.
  * @returns {Function}				The thunk to dispatch
  */
-export function removeFromCollection(entityId, element) {
-	return generateCollectionThunk(entityId, entity => {
+export function removeFromCollection(entityId, element, promise) {
+	return generateCollectionThunk(entityId, promise, entity => {
 		const index = entity.indexOf(element);
 		entity.splice(index, 1);
 	});
@@ -115,13 +106,17 @@ export function removeFromCollection(entityId, element) {
  *
  * @param 	{string} entityId		The collection entity id
  * @param 	{number} index			The old element index in collection
- * @param 	{any} newElement		The new element
+ * @param 	{any} newElement		The new element (or a Promise resolving it)
  * @returns {Function}				The thunk to dispatch
  */
 export function replaceInCollectionByIndex(entityId, index, newElement) {
-	return generateCollectionThunk(entityId, entity => {
-		entity[index] = newElement;
-	});
+	return generateCollectionThunk(
+		entityId,
+		Promise.resolve(newElement),
+		(entity, resolvedNewElement) => {
+			entity[index] = resolvedNewElement;
+		},
+	);
 }
 
 /**
@@ -129,12 +124,16 @@ export function replaceInCollectionByIndex(entityId, index, newElement) {
  *
  * @param 	{string} entityId		The collection entity id
  * @param 	{any} oldElement		The element to replace
- * @param 	{any} newElement		The new element
+ * @param 	{any} newElement		The new element (or a Promise resolving it)
  * @returns {Function}				The thunk to dispatch
  */
 export function replaceInCollection(entityId, oldElement, newElement) {
-	return generateCollectionThunk(entityId, entity => {
-		const index = entity.indexOf(oldElement);
-		entity[index] = newElement;
-	});
+	return generateCollectionThunk(
+		entityId,
+		Promise.resolve(newElement),
+		(entity, resolvedNewElement) => {
+			const index = entity.indexOf(oldElement);
+			entity[index] = resolvedNewElement;
+		},
+	);
 }

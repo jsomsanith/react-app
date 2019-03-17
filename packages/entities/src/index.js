@@ -3,7 +3,7 @@ import { entities } from 'redux-entity';
 import {
 	ENTITIES_STORE_ROOT,
 	getEntity,
-	fetchEntity,
+	addToCollection,
 	insertIntoCollection,
 	removeFromCollection,
 	removeFromCollectionByIndex,
@@ -25,7 +25,7 @@ export const entitiesModule = {
 // Service
 export default {
 	actions: {
-		fetchEntity,
+		addToCollection,
 		insertIntoCollection,
 		removeFromCollection,
 		removeFromCollectionByIndex,
