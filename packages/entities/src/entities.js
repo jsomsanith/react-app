@@ -80,7 +80,7 @@ export function insertIntoCollection(entityId, index, element) {
  * @returns {Function}				The thunk to dispatch
  */
 export function removeFromCollectionByIndex(entityId, index, promise) {
-	return generateCollectionThunk(entityId, promise, entity => {
+	return generateCollectionThunk(entityId, Promise.resolve(promise), entity => {
 		entity.splice(index, 1);
 	});
 }
@@ -95,7 +95,7 @@ export function removeFromCollectionByIndex(entityId, index, promise) {
  * @returns {Function}				The thunk to dispatch
  */
 export function removeFromCollection(entityId, element, promise) {
-	return generateCollectionThunk(entityId, promise, entity => {
+	return generateCollectionThunk(entityId, Promise.resolve(promise), entity => {
 		const index = entity.indexOf(element);
 		entity.splice(index, 1);
 	});
