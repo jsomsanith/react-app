@@ -7,6 +7,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "prepublish": "lerna exec -- yarn prepublish",
     "test": "lerna exec -- yarn test --passWithNoTests"
   },
   "devDependencies": {
@@ -20,6 +21,6 @@
     "packages/http",
     "packages/modules",
     "packages/saga",
-    "packages/talend-scripts-preset-lib"
+    "packages/talend-scripts-preset-jso"
   ]
 }

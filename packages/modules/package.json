@@ -24,6 +24,6 @@
     "@talend/scripts": "^0.14.4-0",
     "enzyme": "^3.9.0",
     "jest-in-case": "^1.0.2",
-    "talend-scripts-preset-lib": "^0.1.0"
+    "talend-scripts-preset-jso": "^0.1.0"
   }
 }

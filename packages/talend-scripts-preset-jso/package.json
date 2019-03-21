@@ -1,5 +1,5 @@
 {
-  "name": "talend-scripts-preset-lib",
+  "name": "talend-scripts-preset-jso",
   "description": "@talend/scripts preset to build libs",
   "version": "0.1.0",
   "license": "MIT",
@@ -10,6 +10,7 @@
     "url": "https://github.com/jsomsanith/react-app.git"
   },
   "scripts": {
+    "prepublish": "echo nothing to prepare",
     "test": "echo nothing to test"
   },
   "dependencies": {
