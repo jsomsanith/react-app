@@ -1,5 +1,5 @@
 import { take, spawn, cancel } from 'redux-saga/effects';
-import { SAGA_START, SAGA_STOP } from './constants';
+import { SAGA_START, SAGA_STOP } from '../constants';
 
 const startedSagas = {};
 
@@ -13,7 +13,7 @@ function* sagaStarter() {
 function* sagaStopper() {
 	while (true) {
 		const { id } = yield take(SAGA_STOP);
-		cancel(startedSagas[id]);
+		yield cancel(startedSagas[id]);
 		delete startedSagas[id];
 	}
 }

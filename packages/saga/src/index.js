@@ -1,7 +1,7 @@
 import createSagaMiddleware from 'redux-saga';
-import rootSaga from './sagaStarter';
-import useSaga from './useSaga';
-import withSaga from './withSaga';
+import rootSaga from './sagas';
+import useSaga from './hook';
+import withSaga from './hoc';
 
 // @jso/react-modules module
 const sagaMiddleware = createSagaMiddleware();

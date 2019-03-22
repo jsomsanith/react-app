@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import useSaga from './useSaga';
+import useSaga from '../hook';
 
 export default function withSaga(WrappedComponent, saga) {
 	function WithSagaWrapper({ dispatch, ...props }) {
