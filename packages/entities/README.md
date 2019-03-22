@@ -1,4 +1,4 @@
-# @jso/entities
+# @jso/react-modules-entities
 
 This addon offers entities management.
 * fetch status and errors
@@ -9,7 +9,7 @@ Entities can have any data type: Object, Array, ...
 ## Installation
 
 ```
-yarn install @jso/entities
+yarn install @jso/react-modules-entities
 ```
 
 ## Bootstrap
@@ -18,7 +18,7 @@ Just pass the entities module to `@jso/react-modules` bootstrap.
 
 ```javascript
 import { bootstrap } from '@jso/react-modules';
-import { entitiesModule } from '@jso/entities';
+import { entitiesModule } from '@jso/react-modules-entities';
 import App from './App.component';
 
 bootstrap({
@@ -61,7 +61,7 @@ This method returns an entity with the following shape
 ```javascript
 import React from 'react';
 import { connect } from 'react-redux';
-import EntitiesService from '@jso/entities';
+import EntitiesService from '@jso/react-modules-entities';
 
 function DatasetsList(props) {
     const { isFetching, data, error } = this.props.datasets;
@@ -96,7 +96,7 @@ EntityService.actions.setEntity(entityId, entity);
 ```javascript
 import React from 'react';
 import { connect } from 'react-redux';
-import EntitiesService from '@jso/entities';
+import EntitiesService from '@jso/react-modules-entities';
 
 class DatasetsList extends React.Component {
     componentDidMount() {
@@ -138,7 +138,7 @@ EntityService.actions.addToCollection(entityId, element);
 // tasks.service.js
 
 import uuid from 'uuid';
-import EntitiesService from '@jso/entities';
+import EntitiesService from '@jso/react-modules-entities';
 
 function addTask(title, description) {
     const element = {
@@ -174,7 +174,7 @@ EntityService.actions.insertIntoCollection(entityId, index,element);
 // tasks.service.js
 
 import uuid from 'uuid';
-import EntitiesService from '@jso/entities';
+import EntitiesService from '@jso/react-modules-entities';
 
 function addTask(title, description) {
     const element = {
@@ -209,7 +209,7 @@ EntityService.actions.removeFromCollectionByIndex(entityId, index, promise);
 ```javascript
 // tasks.service.js
 
-import EntitiesService from '@jso/entities';
+import EntitiesService from '@jso/react-modules-entities';
 import HttpService from '@jso/http';
 
 function removeTask(index) {
@@ -240,7 +240,7 @@ EntityService.actions.removeFromCollection(entityId, element, promise);
 ```javascript
 // tasks.service.js
 
-import EntitiesService from '@jso/entities';
+import EntitiesService from '@jso/react-modules-entities';
 import HttpService from '@jso/http';
 
 function removeTask(element) {
@@ -271,7 +271,7 @@ EntityService.actions.replaceInCollectionByIndex(entityId, index, element);
 ```javascript
 // tasks.service.js
 
-import EntitiesService from '@jso/entities';
+import EntitiesService from '@jso/react-modules-entities';
 
 function updateTask(index, newElement) {
     return EntitiesService.actions.replaceInCollectionByIndex('tasks', index, newElement);
@@ -301,7 +301,7 @@ EntityService.actions.replaceInCollection(entityId, oldElement, newElement);
 ```javascript
 // tasks.service.js
 
-import EntitiesService from '@jso/entities';
+import EntitiesService from '@jso/react-modules-entities';
 
 function updateTask(oldElement, newElement) {
     return EntitiesService.actions.replaceICollection('tasks', oldElement, newElement);

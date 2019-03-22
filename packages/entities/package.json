@@ -1,5 +1,5 @@
 {
-  "name": "@jso/entities",
+  "name": "@jso/react-modules-entities",
   "version": "0.0.1",
   "description": "React module to manage entities lifecycle.",
   "main": "lib/index.js",
