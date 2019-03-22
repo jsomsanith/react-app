@@ -54,7 +54,7 @@ This method returns an entity with the following shape
 | Property | Type | Description |
 |---|---|---|
 | data | `any` | The entity value. |
-| isFetching | `boolean` | The id, to which the entity is attached in the store. |
+| isFetching | `boolean` | A flag that indicates if the data fetching is in progress. |
 | error | `object` | Error returned by fetch request. |
 
 **Example**
@@ -92,6 +92,10 @@ EntityService.actions.setEntity(entityId, entity);
 | entityId | `string` | The id, to which the entity will be attached in the store. |
 | entity | `Promise` or `any` | The entity to create in store or a promise that resolves it. |
 
+| Returns | Type | Description |
+|---|---|---|
+| Redux action | `object` | A redux action to dispatch |
+
 **Example**
 ```javascript
 import React from 'react';
@@ -113,7 +117,7 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps,
 )(DatasetsList);
 
@@ -132,6 +136,10 @@ EntityService.actions.addToCollection(entityId, element);
 |---|---|---|
 | entityId | `string` | The id, to which the entity is attached in the store. |
 | element | `Promise` or `any` | The element to add in the collection or a promise that resolves it. |
+
+| Returns | Type | Description |
+|---|---|---|
+| Redux action | `object` | A redux action to dispatch |
 
 **Example**
 ```javascript
@@ -160,7 +168,7 @@ Insert an element into a collection.
 
 **Method**
 ```javascript
-EntityService.actions.insertIntoCollection(entityId, index,element);
+EntityService.actions.insertIntoCollection(entityId, index, element);
 ```
 
 | Argument | Type | Description |
@@ -168,6 +176,10 @@ EntityService.actions.insertIntoCollection(entityId, index,element);
 | entityId | `string` | The id, to which the entity is attached in the store. |
 | index | `integer` | The index where to add the element. |
 | element | `Promise` or `any` | The element to add in the collection or a promise that resolves it. |
+
+| Returns | Type | Description |
+|---|---|---|
+| Redux action | `object` | A redux action to dispatch |
 
 **Example**
 ```javascript
@@ -182,7 +194,7 @@ function addTask(title, description) {
         title,
         description,
     };
-    return EntitiesService.actions.insertIntoCollection('tasks', element, 0); // insert as collection head
+    return EntitiesService.actions.insertIntoCollection('tasks', 0, element); // insert as collection head
 }
 
 export default {
@@ -192,7 +204,7 @@ export default {
 
 ### RemoveFromCollectionByIndex
 
-Remove an element from a collection, identified by the index.
+Remove an element from a collection, at provided index
 
 **Method**
 ```javascript
@@ -204,6 +216,10 @@ EntityService.actions.removeFromCollectionByIndex(entityId, index, promise);
 | entityId | `string` | The id, to which the entity is attached in the store. |
 | index | `integer` | The index in the array to remove. |
 | promise | `Promise` | `Optional`. A promise to wait before removing the element. |
+
+| Returns | Type | Description |
+|---|---|---|
+| Redux action | `object` | A redux action to dispatch |
 
 **Example**
 ```javascript
@@ -236,6 +252,11 @@ EntityService.actions.removeFromCollection(entityId, element, promise);
 | element | `any` | The element in the array to remove. |
 | promise | `Promise` | `Optional`. A promise to wait before removing the element. |
 
+
+| Returns | Type | Description |
+|---|---|---|
+| Redux action | `object` | A redux action to dispatch |
+
 **Example**
 ```javascript
 // tasks.service.js
@@ -267,6 +288,10 @@ EntityService.actions.replaceInCollectionByIndex(entityId, index, element);
 | index | `integer` | The index in the array to replace. |
 | element | `Promise` or `any` | The new element or a promise that resolves it. |
 
+| Returns | Type | Description |
+|---|---|---|
+| Redux action | `object` | A redux action to dispatch |
+
 **Example**
 ```javascript
 // tasks.service.js
@@ -296,6 +321,10 @@ EntityService.actions.replaceInCollection(entityId, oldElement, newElement);
 | entityId | `string` | The id, to which the entity is attached in the store. |
 | oldElement | `any` | The element to replace. |
 | newElement | `Promise` or `any` | The new element or a promise that resolves it. |
+
+| Returns | Type | Description |
+|---|---|---|
+| Redux action | `object` | A redux action to dispatch |
 
 **Example**
 ```javascript
