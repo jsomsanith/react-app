@@ -23,9 +23,12 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@talend/scripts": "^0.15.0",
+    "enzyme": "^3.9.0",
+    "react-dom": "^16.8.4",
+    "talend-scripts-preset-jso": "^0.1.0"
   },
   "peerDependencies": {
-    "@talend/scripts": "^0.14.4-0",
-    "talend-scripts-preset-jso": "^0.1.0"
+    "@jso/react-modules": "^0.0.1"
   }
 }

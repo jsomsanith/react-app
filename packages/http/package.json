@@ -15,7 +15,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@talend/scripts": "^0.14.4-0",
+    "@talend/scripts": "^0.15.0",
     "talend-scripts-preset-jso": "^0.1.0"
   }
 }

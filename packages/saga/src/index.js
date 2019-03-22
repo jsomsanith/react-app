@@ -1,6 +1,7 @@
 import createSagaMiddleware from 'redux-saga';
-import withSaga from './withSaga';
 import rootSaga from './sagaStarter';
+import useSaga from './useSaga';
+import withSaga from './withSaga';
 
 // @jso/react-modules module
 const sagaMiddleware = createSagaMiddleware();
@@ -11,5 +12,5 @@ export const sagaModule = {
 	},
 };
 
-// HOC
-export default { withSaga };
+// HOC and hook
+export default { withSaga, useSaga };
