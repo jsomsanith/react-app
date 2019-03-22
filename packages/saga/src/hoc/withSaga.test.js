@@ -9,7 +9,7 @@ import { SAGA_START, SAGA_STOP } from '../constants';
 
 const mockedSagaId = 42; // this is set by uuid mock
 const sagaToStart = function* sagaToStart() {};
-const TestComponentWithSaga = withSaga(() => <div />, sagaToStart);
+const TestComponentWithSaga = withSaga(sagaToStart)(() => <div />);
 
 describe('withSaga', () => {
 	it('should start saga at mount', () => {
