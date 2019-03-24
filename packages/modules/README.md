@@ -41,6 +41,8 @@ bootstrap({
 });
 ```
 
+`bootstrap()` accepts a configuration.
+
 | Property | Description |
 |---|---|
 | appId | The id of the html element where to bootstrap the app. |
@@ -55,9 +57,12 @@ bootstrap({
 
 ## Modules
 
-Modules are parts of configuration.
+You pass your main module configuration to `bootstrap()`. All modules accept additional modules.
 
-When you bootstrap your app, you pass your main app configuration. Modules are merged with this main configuration.
+Modules are parts of configuration, following the `bootstrap()` api.
+It allows you to split your app into multiple business modules.
+
+Main module is merged with underlying modules to have a unique bootstrap configuration.
 
 ``` javascript
 // my-addon module
@@ -93,11 +98,93 @@ bootstrap({
 In this example, myAddonModule is merged with the configuration passed to `bootstrap()`
 * middlewares will be `[myMiddleware, myAddonMiddleware]`
 * reducer will contains `app` and `my-addon` reducer keys
-* storeCallback will trigger only myAddonModule storeCallback as it's the only one.
+* storeCallback will trigger only `myAddonDoSomething` as it's the only one.
 
 Modules can be internal modules that are parts of your applications (see next section about custom modules), or external addon modules.
 You can find some interesting addons :
-* [Entities](../entities/README.md) : helps to manage entities with the fetch status and errors.
-* [Saga](../saga/README.md) : add redux-saga with a HOC to start/stop the saga depending on components mount/unmount.
+* [Entities](../entities/README.md) : helps to manage entities with the fetch status and errors, or collections utility functions.
+* [Saga](../saga/README.md) : add redux-saga with a hook/HOC to start/stop the saga followinng components mount/unmount.
 * [Http](../http/README.md) : helps to manage http request, with the possibility to configure 1 global configuration, or 1 configuration per request.
 * [Store utils](../store-utils/README.md) : a way to avoid writing reducers for very simple cases.
+
+## Recommendations
+
+Your React/Redux app should be splitted into business parts. It helps you to scale and organise your code.
+
+Example of file hierarchy
+```
+<src-root>
+    |_ components/
+    |_ services/
+        |_ modules.js               // gather all your app modules
+        |_ datasets/
+            |_ dataset.service.js   // service that exposes reducers, selectors and actions creators. All dataset redux intelligence is located here
+            |_ index.js             // exposes services and '@jso/react-modules' configuration
+        |_ user/
+            |_ user.service.js
+            |_ index.js
+    |_ index.js                     // bootstrap your app, importing './services/modules'
+```
+
+
+A service exposes
+* the service module configuration
+* the action creators
+* the selectors
+* utility functions
+
+Example of `dataset.service.js`
+```javascript
+const DATASET_REDUCER_KEY = 'datasets';
+const SET_DATASETS = 'SET_DATASETS';
+
+// reducer
+function datasetReducer(state, action) {
+    switch(action.type) {
+        case SET_DATASETS:
+            return { ...state, data: action.datasets }
+        // other cases
+    }
+}
+// boostrap module
+export const reducer = {
+    [DATASET_REDUCER_KEY]: datasetReducer,
+};
+
+// a selector
+export function getDatasets(state) {
+    return state[DATASET_REDUCER_KEY].data;
+}
+
+// an action creator
+export function fetchDatasets() {
+    return function fetchThunk(dispatch) {
+        fetch('/datasets')
+            .then(resp => resp.json())
+            .then(datasets => {
+                dispatch({
+                    action: SET_DATASETS,
+                    datasets,
+                };
+            });
+    }
+}
+```
+
+The service's `index.js` is the perfect place to gather your service reducers and service `bootstrap()` configuration.
+
+Example of `index.js`
+```javascript
+import { reducer, getDatasets, fetchDatasets } from './dataset.service';
+
+// @jso/react-modules module
+export const datasetModule = {
+    store: { reducer },
+}
+
+// service api
+export default {
+    actionCreators: { fetchDatasets, /* other dataset selectors */ },
+    selectors: { getDatasets, /* other dataset selectors */ },
+}
+```
