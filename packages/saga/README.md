@@ -20,7 +20,7 @@ yarn install @jso/react-modules-saga
 
 ## Bootstrap
 
-Just pass the saga module to `@jso/react-modules` bootstrap.
+With `@jso/react-modules`, just pass the saga module to bootstrap().
 
 ```javascript
 import { bootstrap } from '@jso/react-modules';
@@ -32,6 +32,22 @@ bootstrap({
 
     modules: [sagaModule]
 });
+```
+
+Without `@jso/react-modules`, you need to register yourself the starter/stopper in redux-saga
+
+```javascript
+import createSagaMiddleware from 'redux-saga';
+import starterStopperSagas from '@jso/react-modules-saga/lib/sagas';
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(
+    reducer,
+    initialState,
+    applyMiddleware(sagaMiddleware)
+);
+sagaMiddleware.run(starterStopperSagas),
 ```
 
 ## useSaga hook

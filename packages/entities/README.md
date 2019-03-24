@@ -3,6 +3,7 @@
 This addon offers entities management.
 * fetch status and errors
 * store entities in redux store
+* utility functions for collections
 
 Entities can have any data type: Object, Array, ...
 
@@ -14,7 +15,7 @@ yarn install @jso/react-modules-entities
 
 ## Bootstrap
 
-Just pass the entities module to `@jso/react-modules` bootstrap.
+With `@jso/react-modules`, just pass the entities module to bootstrap().
 
 ```javascript
 import { bootstrap } from '@jso/react-modules';
@@ -26,6 +27,23 @@ bootstrap({
 
     modules: [entitiesModule]
 });
+```
+
+Without `@jso/react-modules`, you need to register yourself `redux-thunk` and `redux-entity` reducer.
+
+```javascript
+import thunk from 'redux-thunk';
+import { entities } from 'redux-entity';
+import starterStopperSagas from '@jso/react-modules-saga/lib/sagas';
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(
+     { [ENTITIES_STORE_ROOT]: entities }, // it must be at reducer root
+    initialState,
+    applyMiddleware(thunk)
+);
+sagaMiddleware.run(starterStopperSagas),
 ```
 
 ## Service selector
